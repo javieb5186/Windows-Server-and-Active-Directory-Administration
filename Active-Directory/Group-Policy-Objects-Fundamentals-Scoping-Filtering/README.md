@@ -1,8 +1,4 @@
-# Group Policy Processing, Scoping & Inheritance
-
-## Checkpoint 1 — GPO Fundamentals, Scoping & Filtering
-
-***
+# GPO Fundamentals, Scoping & Filtering
 
 ## Project Overview
 
@@ -10,7 +6,7 @@ This project focuses on understanding how **Active Directory Group Policy** dete
 
 A dedicated Group Policy testing environment was created inside the `technicaltechnotech.com` domain so that GPO behavior could be tested without interfering with the normal production-style OU structure.
 
-This first checkpoint covers:
+This covers:
 
 - Creating and configuring Group Policy Objects
 - GPOs vs. GPO links
@@ -23,8 +19,6 @@ This first checkpoint covers:
 - `gpupdate` and `gpresult`
 - Group Policy troubleshooting
 - Active Directory time synchronization troubleshooting encountered during testing
-
-The second checkpoint will focus on **GPO processing order, precedence, conflicts, and inheritance**.
 
 ***
 
@@ -78,8 +72,6 @@ technicaltechnotech.com
 
 Using a dedicated GPO lab prevented testing from unnecessarily affecting the existing departmental and workstation OU structure.
 
-> **Screenshot:** GPO-Lab OU structure in Active Directory Users and Computers.
-
 ***
 
 # Creating the First GPO
@@ -91,6 +83,8 @@ GPO-Lab - User Baseline
 ```
 
 Several User Configuration settings were configured inside the GPO.
+
+![User Policy Settings](./user-configs.png)
 
 Initially, the GPO was intentionally left **unlinked**.
 
@@ -107,10 +101,6 @@ GPO
  ▼
 Site / Domain / OU
 ```
-
-### Memory Hook
-
-> **GPO = the settings. Link = where the settings can apply.**
 
 ***
 
@@ -150,7 +140,7 @@ Applied Group Policy Objects
 
 This confirmed that the GPO was successfully linked and processed.
 
-> **Screenshot:** User Baseline GPO Scope tab showing the link to the Users OU.
+![Successful apply of GPO](./rsop-user.png)
 
 ***
 
@@ -207,6 +197,8 @@ GPO Status
 → Computer configuration settings disabled
 ```
 
+![Disabling Unused Sections](./disable-unused-sections.png)
+
 Conceptually:
 
 ```text
@@ -260,10 +252,6 @@ Normal GPO
 ```
 
 Once created, the normal GPO can be modified independently.
-
-### Memory Hook
-
-> **Starter GPO = reusable starting template.**
 
 ***
 
@@ -348,7 +336,7 @@ This demonstrated:
 
 > Being located underneath an OU with a linked GPO does not guarantee that the GPO will apply.
 
-> **Screenshot:** User Baseline Scope tab showing Security Filtering.
+![User Scope with Security Filtering](./user-filtering.png)
 
 ***
 
@@ -422,28 +410,6 @@ Different Security Membership
             ↓
 Different GPO Result
 ```
-
-> **Screenshot:** `gpresult` showing User Baseline applied to `gpotest`.
-
-> **Screenshot:** `gpresult` showing User Baseline denied because of Security Filtering for `gpotest2`.
-
-***
-
-# Security Filtering Memory Hook
-
-```text
-GPO Link
-   ↓
-WHERE can the GPO apply?
-
-Security Filtering
-   ↓
-WHO is allowed to apply it?
-```
-
-### Memory Hook
-
-> **Link = where. Security Filtering = who.**
 
 ***
 
@@ -545,8 +511,6 @@ Yes
 GPO Applies
 ```
 
-> **Screenshot:** WMI Filter configuration showing the namespace and working query.
-
 ***
 
 # WMI Filtering Troubleshooting
@@ -558,6 +522,8 @@ Initial tests resulted in:
 ```text
 Denied (WMI Filter)
 ```
+
+![Denied WMI Filter](./wmi-denied.png)
 
 Different operating-system properties were investigated while determining why the filter was not matching CLIENT01.
 
@@ -622,6 +588,8 @@ The WMI condition can also be deliberately changed to a false value to demonstra
 SELECT * FROM Win32_ComputerSystem WHERE Domain = "fake.example"
 ```
 
+![WMI Configuration and Query](./wmi-config-query.png)
+
 Conceptually:
 
 ```text
@@ -639,7 +607,7 @@ WMI = FALSE
 Denied (WMI Filter)
 ```
 
-> **Screenshot:** `gpresult /scope computer /r` showing Computer Baseline successfully applied.
+![Successful WMI Filter](./wmi-success.png)
 
 ***
 
@@ -669,12 +637,6 @@ System matches condition?
    ↓
 GPO processing continues
 ```
-
-### Memory Hook
-
-> **Security Filtering = WHO?**
-
-> **WMI Filtering = DOES THE SYSTEM MATCH THE CONDITION?**
 
 ***
 
@@ -926,98 +888,6 @@ The time synchronization incident will also be documented separately as an infra
 
 ***
 
-# Screenshot Checklist
-
-The following screenshots provide evidence for this checkpoint.
-
-### 1. GPO Lab OU Structure
-
-```text
-GPO-Lab
-├── Users
-│   ├── gpotest
-│   └── gpotest2
-└── Computers
-    └── CLIENT01
-```
-
-***
-
-### 2. User Baseline Scope
-
-Show:
-
-- `GPO-Lab - User Baseline`
-- Users OU link
-- Security Filtering
-
-***
-
-### 3. Security Filtering — Applied
-
-Show:
-
-```text
-gpotest
-GPO-Lab - User Baseline
-Applied
-```
-
-using:
-
-```cmd
-gpresult /scope user /r
-```
-
-***
-
-### 4. Security Filtering — Denied
-
-Show:
-
-```text
-gpotest2
-GPO-Lab - User Baseline
-Denied (Security)
-```
-
-***
-
-### 5. WMI Filter Configuration
-
-Show:
-
-```text
-TTT - Windows Client OS
-```
-
-including:
-
-```text
-root\CIMv2
-```
-
-and the working WMI query.
-
-***
-
-### 6. Computer Baseline Applied
-
-Show:
-
-```text
-GPO-Lab - Computer Baseline
-Applied
-```
-
-using:
-
-```cmd
-gpresult /scope computer /r
-```
-
-***
-
 # What I Learned
 
 - A GPO can exist without being linked anywhere.
@@ -1067,39 +937,3 @@ gpresult /scope computer /r
 - Domain troubleshooting
 - Policy verification
 - Root cause analysis
-
-***
-
-# Checkpoint 1 Complete
-
-The first half of the Group Policy project focused primarily on:
-
-> **Does this GPO apply to this user or computer?**
-
-The next checkpoint will focus on:
-
-> **When multiple GPOs apply, which policy wins?**
-
-Planned topics include:
-
-```text
-LSDOU Processing Order
-        ↓
-Multiple Conflicting GPOs
-        ↓
-Link Order and Precedence
-        ↓
-Inheritance
-        ↓
-Block Inheritance
-        ↓
-Enforced
-        ↓
-Group Policy Inheritance
-        ↓
-Resultant Set of Policy
-        ↓
-Effective Policy Troubleshooting
-```
-
-This will build on the scoping and filtering concepts from Checkpoint 1 and demonstrate how Windows determines the final effective Group Policy configuration when multiple policies interact.
