@@ -1,8 +1,4 @@
-# Group Policy Processing, Scoping & Inheritance
-
-## Checkpoint 2 — LSDOU, GPO Inheritance & Block Inheritance
-
-***
+# LSDOU, GPO Inheritance & Block Inheritance
 
 ## Project Overview
 
@@ -95,10 +91,6 @@ Where:
 
 When multiple applicable GPOs configure the same setting differently, policies processed later generally have higher precedence.
 
-### Memory Hook
-
-> **LSDOU = Local → Site → Domain → OU**
-
 ***
 
 # Creating Conflicting Policy Levels
@@ -190,6 +182,8 @@ GPO-Lab - Domain Policy
 GPO-Lab - OU Policy
 ```
 
+![Applied GPOs](./applied-gpos.png)
+
 This confirmed that CLIENT01 was receiving policies from multiple levels of the Active Directory hierarchy.
 
 ### Important Concept
@@ -205,10 +199,6 @@ OU
    ↓
 CLIENT01
 ```
-
-### Memory Hook
-
-> **Multiple GPOs can apply to the same computer.**
 
 ***
 
@@ -239,10 +229,6 @@ The Domain Policy was not directly linked to the Computers OU.
 
 However, CLIENT01 still received it because the policy was inherited from the domain.
 
-### Memory Hook
-
-> **Inheritance = policies from above flow down.**
-
 ***
 
 # Group Policy Inheritance Tab
@@ -257,6 +243,8 @@ GPO-Lab - OU Policy
 Default Domain Policy
 GPO-Lab - Domain Policy
 ```
+
+![Before Inheritance Block](./before-block.png)
 
 The view also displayed **precedence numbers**.
 
@@ -441,6 +429,10 @@ Domain
     └── CLIENT01
 ```
 
+![After Inheritance Block](./after-block.png)
+
+![GPO Structure](./gpo-structure.png)
+
 ***
 
 # Observing the Result
@@ -468,10 +460,6 @@ Directly linked to OU
         ↓
 Still applies normally
 ```
-
-### Memory Hook
-
-> **Block Inheritance = stop inherited GPO links from above.**
 
 ***
 
@@ -530,14 +518,6 @@ This distinction is important when designing Group Policy hierarchies.
 
 ***
 
-# Restoring the Lab
-
-After completing the Block Inheritance experiment, Block Inheritance was disabled again so that the lab returned to its normal inheritance configuration.
-
-This prevents the temporary experiment from unexpectedly affecting future Group Policy projects.
-
-***
-
 # Verification Tools
 
 The following tools were used during this checkpoint.
@@ -563,69 +543,6 @@ GPMC was used to inspect:
 - Group Policy Inheritance
 - GPO precedence
 - Block Inheritance
-
-***
-
-# Screenshot Checklist
-
-Recommended screenshots for this checkpoint:
-
-## 1. Domain and OU GPO Links
-
-Show the Group Policy Management structure containing:
-
-```text
-technicaltechnotech.com
-│
-│ GPO-Lab - Domain Policy
-│
-└── GPO-Lab
-    └── Computers
-        │
-        │ GPO-Lab - OU Policy
-        └── CLIENT01
-```
-
-***
-
-## 2. Applied GPOs on CLIENT01
-
-Capture:
-
-```cmd
-gpresult /scope computer /r
-```
-
-showing both the Domain Policy and OU Policy as applied.
-
-***
-
-## 3. Group Policy Inheritance Tab
-
-Capture the inheritance view showing:
-
-```text
-GPO-Lab - Computer Baseline
-GPO-Lab - OU Policy
-Default Domain Policy
-GPO-Lab - Domain Policy
-```
-
-and their precedence numbers.
-
-This is one of the strongest screenshots for this checkpoint because it demonstrates both inheritance and precedence.
-
-***
-
-## 4. Block Inheritance Enabled
-
-Capture the Computers OU in GPMC while Block Inheritance is enabled.
-
-***
-
-## 5. Inheritance After Blocking
-
-Capture the Group Policy Inheritance tab after enabling Block Inheritance to demonstrate that the normally inherited Domain-level policies are no longer inherited.
 
 ***
 
@@ -663,52 +580,3 @@ Capture the Group Policy Inheritance tab after enabling Block Inheritance to dem
 - Policy Verification
 - Active Directory Administration
 - Windows Client Administration
-
-***
-
-# Checkpoint 2 Complete
-
-This checkpoint focused specifically on:
-
-```text
-1. LSDOU
-2. GPO Inheritance
-3. Block Inheritance
-```
-
-The lab demonstrated how policies move through an Active Directory hierarchy and how administrators can prevent normally inherited policies from reaching a particular OU.
-
-The progression so far is:
-
-```text
-Checkpoint 1
-GPO Creation & Linking
-        ↓
-User vs Computer Configuration
-        ↓
-Starter GPOs
-        ↓
-Security Filtering
-        ↓
-WMI Filtering
-
-Checkpoint 2
-        ↓
-LSDOU
-        ↓
-GPO Inheritance
-        ↓
-Block Inheritance
-```
-
-Future Group Policy work can build on this foundation with topics such as:
-
-```text
-Enforced
-        ↓
-Link Order / Precedence
-        ↓
-Resultant Set of Policy / Effective Policy
-```
-
-These topics will be handled separately so that each Group Policy behavior can be tested and understood in a controlled lab.
