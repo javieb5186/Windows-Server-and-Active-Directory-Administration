@@ -74,7 +74,7 @@ Normally, Block Inheritance prevents inherited GPO links from applying.
 
 ### Enforced + Block Inheritance
 
-![Before Enforced](./before-enforced.png)
+![Before Enforced](./before-enforce.png)
 
 The domain-level GPO link was configured as **Enforced**.
 
@@ -92,7 +92,7 @@ The enforced GPO continued through the inheritance block.
 
 This demonstrated that an **Enforced link cannot be blocked using Block Inheritance**.
 
-![After Enforced](./after-enforced.png)
+![After Enforced](./after-enforce.png)
 
 
 ***
@@ -189,6 +189,8 @@ Minimum Password Length
 ↓
 8
 ```
+
+![Changing Min Password via GPME](./change-default-domain.png)
 
 This provided hands-on experience modifying a domain account security policy.
 
