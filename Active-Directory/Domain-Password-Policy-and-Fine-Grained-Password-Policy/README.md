@@ -498,7 +498,7 @@ Minimum Password Length: 16
 
 ***
 
-# Checkpoint 4 — Testing Password Enforcement
+# Testing Password Enforcement
 
 The final checkpoint verified that the resultant password policy was actually enforced.
 
