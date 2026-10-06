@@ -727,8 +727,3 @@ Through this project I learned:
 - Effective policy verification
 - Identity and access management
 - Windows Server administration
-
-
-> **Resultant password policy = the policy the user actually receives.**
-
-By the end of the project, the lab demonstrated both domain-wide and targeted password-policy administration, including policy assignment, precedence, verification, and actual password enforcement.
