@@ -28,9 +28,79 @@ The environment combines Windows infrastructure with virtual and physical-style 
 
 ***
 
-## Network Topology
 
-![Network Topology](./network-topology.png)
+## Network Infrastructure
+
+### Overview
+Designed and configured a virtual enterprise network using Hyper-V, OPNsense, and VyOS to simulate a segmented corporate environment.
+
+The network supports Active Directory, Windows clients, centralized management, inter-subnet routing, firewall protection, and internet connectivity.
+
+---
+
+### Network Architecture
+
+| Component | Purpose |
+|---|---|
+| Hyper-V | Virtualization and virtual switching |
+| OPNsense | Firewall, outbound NAT, WAN connectivity |
+| VyOS | Inter-subnet routing and default gateway |
+| DC01 / DC02 | Active Directory Domain Services and DNS |
+| CLIENT01 | Windows 11 domain workstation |
+| MGMT01 | Administrative management workstation |
+
+### Network Segmentation
+
+| Network | Subnet | Gateway |
+|---|---|---|
+| Transit | 10.10.10.0/24 | OPNsense: 10.10.10.1 |
+| Servers | 10.20.10.0/24 | 10.20.10.1 |
+| Clients | 10.20.20.0/24 | 10.20.20.1 |
+| Management | 10.20.30.0/24 | 10.20.30.1 |
+
+The three internal subnets use VyOS as their default gateway. VyOS forwards internet-bound traffic to OPNsense.
+
+### Routing and Firewall
+
+- Configured VyOS interfaces for three internal subnets.
+- Configured a default route from VyOS to OPNsense.
+- Configured OPNsense static routes back to internal networks.
+- Implemented Hybrid Outbound NAT for all three internal subnets.
+- Connected OPNsense WAN to the external home network through Hyper-V.
+
+### Verification
+
+- Verified Hyper-V virtual switches and VM connections.
+- Verified VyOS interfaces and routing table.
+- Verified OPNsense static routes and active NAT rules.
+- Successfully tested external TCP connectivity from CLIENT01.
+
+### What I Learned
+
+- How virtual switches connect isolated network segments.
+- How routers forward traffic between different subnets.
+- How firewalls and outbound NAT enable internet connectivity.
+- Why return routes are necessary for routed networks.
+- How to troubleshoot network connectivity using CLI tools.
+
+### Skills Practiced
+
+- Hyper-V Networking
+- Network Segmentation
+- IPv4 Addressing and Subnetting
+- Static Routing
+- Firewall Configuration
+- Network Address Translation (NAT)
+- Network Troubleshooting
+- Infrastructure Verification
+
+---
+
+### Network Topology
+
+![TTT Network Topology](./network-topology.png)
+
+***
 
 # Major Projects
 
