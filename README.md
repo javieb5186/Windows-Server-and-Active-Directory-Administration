@@ -28,7 +28,6 @@ The environment combines Windows infrastructure with virtual and physical-style 
 
 ***
 
-
 ## Network Infrastructure
 
 ### Overview
