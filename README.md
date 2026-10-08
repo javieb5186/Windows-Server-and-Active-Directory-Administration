@@ -28,6 +28,10 @@ The environment combines Windows infrastructure with virtual and physical-style 
 
 ***
 
+## Network Topology
+
+![Network Topology](./network-topology.png)
+
 # Major Projects
 
 ## Network Infrastructure, Routing & Firewalls
